@@ -1,0 +1,26 @@
+{
+  "name": "react-view-controller",
+  "version": "1.0.0",
+  "description": "A generic, decoupled view controller for React.",
+  "main": "src/ReactViewController.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Resist Design",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resistdesign/react-view-controller.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "ES2017",
+    "React",
+    "View",
+    "Controller"
+  ],
+  "bugs": {
+    "url": "https://github.com/resistdesign/react-view-controller/issues"
+  },
+  "homepage": "https://github.com/resistdesign/react-view-controller#readme"
+}
