@@ -132,7 +132,7 @@ export default class RVCDemo extends Component {
         <input
           type='text'
           placeholder='Name'
-          value={subControllers.name.value}
+          value={subControllers.name.value || ''}
           onChange={event => subControllers.name.onChange(event.target.value)}
         />
         <hr />
