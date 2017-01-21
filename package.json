@@ -1,6 +1,6 @@
 {
   "name": "react-view-controller",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A generic, decoupled view controller for React.",
   "main": "src/ReactViewController.js",
   "scripts": {
