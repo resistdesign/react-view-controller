@@ -124,7 +124,7 @@ export default class RVCDemo extends Component {
           RVCDemo
         </h1>
         <h3>
-          Name
+          Name:
         </h3>
         <input
           type='text'
@@ -134,13 +134,15 @@ export default class RVCDemo extends Component {
         />
         <hr />
         <div>
-          Phone Country
-          Code: {this.renderFullPhoneNumber(contact && contact.phone)}
+          <h3>
+            Phone Country Code:
+          </h3>
+          {this.renderFullPhoneNumber(contact && contact.phone)}
         </div>
         {this.renderPhone(subControllers.phone)}
         <hr />
         <h3>
-          Projects
+          Projects:
         </h3>
         {this.renderProjectList(subControllers.projects)}
         <button
