@@ -24,6 +24,7 @@ export default class Project extends Component {
           placeholder='Title'
           value={sc.title.value}
           onChange={event => sc.title.onChange(event.target.value)}
+          autoFocus
         />
         <button
           onClick={onRemove}

@@ -16,6 +16,9 @@ const CONTACT_META = {
       description: '',
       date: ''
     }
+  ],
+  emails: [
+    ''
   ]
 };
 
@@ -42,14 +45,14 @@ export default class RVCDemo extends Component {
     contact: {}
   };
 
-  renderPhone (ctrl) {
+  renderPhone (ctrl, contact) {
     if (ctrl) {
       const sc = ctrl.getSubControllers();
 
       return (
         <div>
           <h3>
-            Phone:
+            Phone: ({this.renderFullPhoneNumber(contact && contact.phone)})
           </h3>
           <input
             type='number'
@@ -100,7 +103,7 @@ export default class RVCDemo extends Component {
     if (ctrl) {
       return (
         <Project
-          key={`Project:${ctrl.data.title}:${index}`}
+          key={`Project:${index}`}
           rvc={ctrl}
           onRemove={() => this.rvc.removeItemFromArray('projects', index)}
         />
@@ -133,13 +136,7 @@ export default class RVCDemo extends Component {
           onChange={event => subControllers.name.onChange(event.target.value)}
         />
         <hr />
-        <div>
-          <h3>
-            Phone Country Code:
-          </h3>
-          {this.renderFullPhoneNumber(contact && contact.phone)}
-        </div>
-        {this.renderPhone(subControllers.phone)}
+        {this.renderPhone(subControllers.phone, contact)}
         <hr />
         <h3>
           Projects:
@@ -149,6 +146,36 @@ export default class RVCDemo extends Component {
           onClick={() => this.rvc.addItemToArray('projects', {})}
         >
           + Add a Project
+        </button>
+        <hr />
+        <h3>
+          Emails: ({contact.emails && contact.emails.join(', ')})
+        </h3>
+        {subControllers.emails.map((ctrl, index) => {
+          return (
+            <div
+              key={`Email:${index}`}
+            >
+              <input
+                type='email'
+                value={ctrl.data}
+                onChange={event => ctrl.setData(event.target.value)}
+                autoFocus
+              />
+              <button
+                onClick={() => this.rvc.removeItemFromArray('emails', index)}
+              >
+                - Remove
+              </button>
+              <br />
+              <br />
+            </div>
+          );
+        })}
+        <button
+          onClick={() => this.rvc.addItemToArray('emails', '')}
+        >
+          + Add an Email
         </button>
       </div>
     );
