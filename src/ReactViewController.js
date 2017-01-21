@@ -1,4 +1,4 @@
-class ReactViewController {
+export default class ReactViewController {
   meta;
   data;
   onChange;
