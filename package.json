@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/resistdesign/react-view-controller#readme",
   "devDependencies": {
-    "react": "15.3.2",
-    "react-dom": "15.3.2"
+    "react": "^15.4.0",
+    "react-dom": "^15.4.0"
   }
 }
