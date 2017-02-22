@@ -1,10 +1,12 @@
 export default class ReactViewController {
   meta;
+  validation;
   data;
   onChange;
 
-  constructor ({ meta, data, onChange }) {
+  constructor ({ meta, validation, data, onChange }) {
     this.meta = meta;
+    this.validation = validation;
     this.data = data;
     this.onChange = onChange;
   }
@@ -106,6 +108,9 @@ export default class ReactViewController {
       for (const k in this.meta) {
         if (this.meta.hasOwnProperty(k)) {
           const valueType = this.meta[k];
+          const subValidation = this.validation instanceof Object ?
+            this.validation[k] :
+            undefined;
 
           if (valueType instanceof Array) {
             const scList = [];
@@ -118,6 +123,9 @@ export default class ReactViewController {
 
                 scList.push(new ReactViewController({
                   meta: valueType[0],
+                  validation: subValidation instanceof Array ?
+                    subValidation[0] :
+                    undefined,
                   data: dataItem,
                   onChange: (item) => {
                     this.changeItemInArray(k, item, i);
@@ -130,6 +138,9 @@ export default class ReactViewController {
           } else if (valueType instanceof Object) {
             subControllers[k] = new ReactViewController({
               meta: valueType,
+              validation: subValidation instanceof Object ?
+                subValidation :
+                undefined,
               data: this.data && this.data[k],
               onChange: (value) => {
                 this.setProperty(k, value);
@@ -149,4 +160,26 @@ export default class ReactViewController {
 
     return subControllers;
   };
+
+  validate = (path) => {
+    if (
+      this.data instanceof Object &&
+      this.meta instanceof Object &&
+      this.meta.hasOwnProperty(path) &&
+      this.validation instanceof Object &&
+      this.validation[path] instanceof Function
+    ) {
+      const validator = this.validation[path];
+
+      validator(this.data[path], this.data, path);
+    }
+  };
+
+  getValidationMessage (path) {
+    try {
+      this.validate(path);
+    } catch (error) {
+      return error.message;
+    }
+  }
 }

@@ -21,6 +21,29 @@ const CONTACT_META = {
     ''
   ]
 };
+const CONTACT_VALIDATION = {
+  name: (value) => {
+    if (typeof value !== 'string' || value === '') {
+      throw new Error('Invalid name.');
+    }
+  },
+  phone: {
+    country: (value) => {
+      if (String(Number(value)) === 'NaN' || value === '') {
+        throw new Error('Invalid country code.');
+      }
+    }
+  },
+  projects: [
+    {
+      title: (value) => {
+        if (typeof value !== 'string' || value === '') {
+          throw new Error('Invalid title.');
+        }
+      }
+    }
+  ]
+};
 
 export default class RVCDemo extends Component {
   static propTypes = {};
@@ -32,6 +55,7 @@ export default class RVCDemo extends Component {
 
     this.rvc = new RVC({
       meta: CONTACT_META,
+      validation: CONTACT_VALIDATION,
       data: this.state.contact,
       onChange: (contact) => {
         this.setState({
@@ -60,6 +84,11 @@ export default class RVCDemo extends Component {
             value={sc.country.value}
             onChange={event => sc.country.onChange(event.target.value)}
           />
+          <div
+            style={{ border: 'solid 0.125rem red' }}
+          >
+            {ctrl.getValidationMessage('country')}
+          </div>
           <br />
           <br />
           <input
@@ -119,7 +148,7 @@ export default class RVCDemo extends Component {
 
   render () {
     const { contact } = this.state;
-    const subControllers = this.rvc.getSubControllers();
+    const sc = this.rvc.getSubControllers();
 
     return (
       <div>
@@ -132,16 +161,21 @@ export default class RVCDemo extends Component {
         <input
           type='text'
           placeholder='Name'
-          value={subControllers.name.value || ''}
-          onChange={event => subControllers.name.onChange(event.target.value)}
+          value={sc.name.value || ''}
+          onChange={event => sc.name.onChange(event.target.value)}
         />
+        <div
+          style={{ border: 'solid 0.125rem red' }}
+        >
+          {this.rvc.getValidationMessage('name')}
+        </div>
         <hr />
-        {this.renderPhone(subControllers.phone, contact)}
+        {this.renderPhone(sc.phone, contact)}
         <hr />
         <h3>
           Projects:
         </h3>
-        {this.renderProjectList(subControllers.projects)}
+        {this.renderProjectList(sc.projects)}
         <button
           onClick={() => this.rvc.addItemToArray('projects', {})}
         >
@@ -151,7 +185,7 @@ export default class RVCDemo extends Component {
         <h3>
           Emails: ({contact.emails && contact.emails.join(', ')})
         </h3>
-        {subControllers.emails.map((ctrl, index) => {
+        {sc.emails.map((ctrl, index) => {
           return (
             <div
               key={`Email:${index}`}

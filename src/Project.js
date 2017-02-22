@@ -26,6 +26,11 @@ export default class Project extends Component {
           onChange={event => sc.title.onChange(event.target.value)}
           autoFocus
         />
+        <div
+          style={{ border: 'solid 0.125rem red' }}
+        >
+          {rvc.getValidationMessage('title')}
+        </div>
         <button
           onClick={onRemove}
         >
